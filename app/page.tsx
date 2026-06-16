@@ -1,8 +1,8 @@
+import type { CSSProperties } from "react";
 import Meter from "@/components/Meter";
 import HeroMeter from "@/components/HeroMeter";
 import CopyButton from "@/components/CopyButton";
 import SiteEffects from "@/components/SiteEffects";
-import GitHubStars from "@/components/GitHubStars";
 
 const SITE = "https://dumbometer.xyz";
 const REPO = "MaximoCorrea1/dumbometer";
@@ -11,7 +11,6 @@ const INSTALL = `/plugin marketplace add MaximoCorrea1/dumbometer
 /plugin install dumbometer
 /dumbometer:setup`;
 const STEPS = INSTALL.split("\n");
-// $9 Big Dumb Energy -> Polar checkout (server route keeps the token server-side).
 const CHECKOUT = "/api/checkout?products=843fdc28-55e3-43d5-9924-2af444e412f4";
 
 const SESSION = [
@@ -22,14 +21,13 @@ const SESSION = [
 ];
 
 const STATES = [
-  { nm: "Smart", color: "var(--smart)", rg: "0-24%", pct: 14 },
-  { nm: "Coasting", color: "var(--coasting)", rg: "25-49%", pct: 37 },
-  { nm: "Foggy", color: "var(--foggy)", rg: "50-69%", pct: 61 },
-  { nm: "Cooked", color: "var(--cooked)", rg: "70-89%", pct: 82 },
-  { nm: "Dumb 💀", color: "var(--dumb)", rg: "90-100%", pct: 96 },
+  { nm: "Smart", color: "var(--smart)", rg: "0-24%" },
+  { nm: "Coasting", color: "var(--coasting)", rg: "25-49%" },
+  { nm: "Foggy", color: "var(--foggy)", rg: "50-69%" },
+  { nm: "Cooked", color: "var(--cooked)", rg: "70-89%" },
+  { nm: "Dumb", color: "var(--dumb)", rg: "90-100%" },
 ];
 
-// FAQ drives both the visible section and the FAQPage JSON-LD (DRY).
 const FAQ = [
   { q: "What is dumbometer?", a: "A Claude Code status-line gauge that shows how full your context window is, from Smart to Dumb, so you /compact before quality drops." },
   { q: "What is context rot?", a: "As a session fills the context window, the model spreads its attention thinner and starts making mistakes it would not make fresh. dumbometer measures the cause, context percent, so you see it coming." },
@@ -75,79 +73,38 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }}
       />
 
-      <nav>
-        <div className="brand">
-          <span className="badge" role="img" aria-label="dumbometer mascot" />
-          dumbometer
-        </div>
-        <a className="navlink" href={GH}>
+      <div className="topmast">
+        <span className="mascot top" role="img" aria-label="dumbometer mascot, a derpy gauge face" />
+        <a className="ghlink" href={GH}>
           ★ GitHub
         </a>
-      </nav>
+      </div>
 
       <header className="hero wrap">
-        <div className="hero-col">
-          <div className="hero-top">
-            <span className="hero-mascot" role="img" aria-label="dumbometer mascot, a derpy gauge face" />
-          </div>
-
-          <div className="hero-eyebrow">
-            <span className="eyebrow mono">// a meter for Claude Code</span>
-          </div>
-
-          <div className="hero-h1">
-            <h1>Know when your AI gets dumb.</h1>
-          </div>
-
-          <div className="hero-sub">
-            <p className="hero-sub-text">
-              A live meter in your Claude Code status line that shows how full your context window is,
-              so you <code>/compact</code> before your agent forgets your code.
-            </p>
-          </div>
-
-          <div className="hero-meterbox">
-            <HeroMeter />
-          </div>
-
-          <div className="hero-cta">
-            <div className="cta-row">
-              <a className="btn-primary" href="#install">
-                Install free →
-              </a>
-              <a className="btn-ghost" href={GH}>
-                ★ GitHub →
-              </a>
-            </div>
-          </div>
-
-          <div className="hero-trust">
-            <div className="proof">
-              <GitHubStars repo={REPO} />
-              <span className="chip">
-                <b>64</b> tests
-              </span>
-              <span className="chip">
-                <b>0</b> deps
-              </span>
-              <span className="chip">
-                <b>0</b> tokens
-              </span>
-              <span className="chip">MIT</span>
-              <span className="chip">never crashes</span>
-            </div>
-          </div>
+        <h1>
+          Know when your AI gets <span className="hl">dumb.</span>
+        </h1>
+        <p className="hero-say">
+          A live meter for Claude Code that shows how full your context window is, so you{" "}
+          <code>/compact</code> before your agent forgets your code.
+        </p>
+        <div className="hero-meterbox">
+          <HeroMeter />
+        </div>
+        <div className="hero-cta">
+          <a className="btn-primary" href="#install">
+            Install free →
+          </a>
+          <a className="btn-ghost" href={GH}>
+            ★ GitHub
+          </a>
         </div>
       </header>
 
-      <section className="wrap reveal">
-        <span className="section-label cyan">// a real session</span>
+      <section className="sec wrap reveal">
+        <span className="snum cyan">01</span>
         <h2>Watch it climb.</h2>
-        <p className="lead">
-          One coding session, top to bottom. The meter fills in your status line, and you see the
-          drop coming before the answers go bad.
-        </p>
-
+        <p className="lead">One session, top to bottom. You see the drop coming before the answers go bad.</p>
         <div className="session-strip">
           {SESSION.map((s) => (
             <div className="session-step" key={s.label}>
@@ -175,21 +132,21 @@ export default function Home() {
             <span className="ss-pct" style={{ color: "var(--smart)" }}>
               8%
             </span>
-            <span className="ss-note" style={{ color: "#4dff6a55" }}>
-              ↑ after /compact, fresh context.
+            <span className="ss-note" style={{ color: "#39ff7a66" }}>
+              ↑ after /compact, fresh.
             </span>
           </div>
         </div>
       </section>
 
-      <section className="wrap reveal">
-        <span className="section-label pink">// the problem</span>
+      <section className="sec wrap reveal">
+        <span className="snum pink">02</span>
         <h2>Context rot is real.</h2>
         <div className="rot-block">
           <p>
             Early on, your agent one-shots the function. Three hundred messages later it re-introduces
-            the bug you killed an hour ago and confidently invents an API that does not exist. You
-            cannot feel it coming. The meter can.
+            the bug you killed an hour ago and invents an API that does not exist. You cannot feel it
+            coming. The meter can.
           </p>
           <div className="sig mono">
             {"// the fix is "}
@@ -198,66 +155,41 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="wrap reveal">
-        <span className="section-label">// the readout</span>
+      <section className="sec wrap reveal">
+        <span className="snum">03</span>
         <h2>Five states. One glance.</h2>
-        <p className="lead">
-          Empty window = sharp. Full window = mush. dumbometer measures the cause and names it.
-        </p>
-        <div className="states">
+        <p className="lead">Empty window = sharp. Full window = mush. The bar names exactly where you are.</p>
+        <div className="states-bar">
           {STATES.map((s) => (
-            <div className="state" key={s.nm}>
-              <div className="nm" style={{ color: s.color }}>
-                {s.nm}
-              </div>
-              <div className="rg">{s.rg}</div>
-              <div className="row">
-                <Meter pct={s.pct} color={s.color} variant="mini" />
-                <span className="pc" style={{ color: s.color }}>
-                  {s.pct}%
-                </span>
-              </div>
+            <div className="seg" key={s.nm} style={{ "--c": s.color } as CSSProperties}>
+              <div className="snm">{s.nm}</div>
+              <div className="srg">{s.rg}</div>
+              <div className="sbar" />
             </div>
           ))}
         </div>
-
-        <div className="cta-band">
-          <div className="ct">
-            See it in <span className="acc">your</span> status line.
-          </div>
-          <a className="btn-primary" href="#install">
-            Install free →
-          </a>
-        </div>
       </section>
 
-      <section className="wrap reveal">
-        <span className="section-label grape">// how it works</span>
+      <section className="sec wrap reveal">
+        <span className="snum grape">04</span>
         <h2>Three things. That is it.</h2>
-
         <div className="how">
           <div className="how-item">
             <h3>{"// reads your % locally"}</h3>
             <p>
-              Pulls the real context-window percentage from Claude Code, on your machine. No guessing,
-              no transcript scraping, no network call.
+              The real context-window percentage, straight from Claude Code, on your machine. No
+              guessing, no network call.
             </p>
           </div>
           <div className="how-item">
             <h3>{"// never crashes"}</h3>
-            <p>
-              Every failure path falls back to safe output and exits clean. It will never garble your
-              status line. 64 tests prove it.
-            </p>
+            <p>Every failure path falls back to safe output and exits clean. 64 tests prove it.</p>
           </div>
           <div className="how-item">
             <h3>{"// one file, zero deps"}</h3>
-            <p>
-              MIT, no account, no telemetry, no config. Clone it or install it. It works immediately.
-            </p>
+            <p>MIT, no account, no telemetry, no config. Install it and it works immediately.</p>
           </div>
         </div>
-
         <div className="zerotok-block">
           <span className="zt-badge">ZERO TOKENS</span>
           <p className="zt-txt">
@@ -267,8 +199,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="wrap reveal">
-        <span className="section-label grape">// faq</span>
+      <section className="sec wrap reveal">
+        <span className="snum">05</span>
         <h2>Questions, answered.</h2>
         <div className="faq">
           {FAQ.map((f) => (
@@ -278,18 +210,10 @@ export default function Home() {
             </div>
           ))}
         </div>
-        <div className="cta-band">
-          <div className="ct">
-            That is the whole thing. <span className="acc">Free.</span>
-          </div>
-          <a className="btn-primary" href="#install">
-            Install free →
-          </a>
-        </div>
       </section>
 
-      <section className="wrap reveal tight" id="install">
-        <span className="section-label">// install</span>
+      <section className="sec wrap reveal" id="install">
+        <span className="snum">06</span>
         <h2>30 seconds. Then forget it exists.</h2>
         <p className="lead">Paste three commands into Claude Code. The meter shows up.</p>
         <div className="install-hi">
@@ -300,14 +224,13 @@ export default function Home() {
             </div>
           ))}
           <div className="install-foot">
-            <span className="trust-line mono">free · MIT · zero tokens · never crashes</span>
             <CopyButton text={INSTALL} label="COPY ALL 3" />
           </div>
         </div>
       </section>
 
-      <section className="wrap reveal">
-        <span className="section-label pink">// pricing</span>
+      <section className="sec wrap reveal">
+        <span className="snum pink">07</span>
         <h2>Three tiers. Pick the free one.</h2>
         <p className="lead">
           The product is free and that is the honest answer. The other two exist because we could not
@@ -379,17 +302,20 @@ export default function Home() {
 
       <footer>
         <div className="wrap">
+          <div className="foot-mascot">
+            <span className="mascot foot" role="img" aria-label="dumbometer mascot" />
+          </div>
           <div className="big">
             Stop shipping
             <br />
-            <span style={{ color: "var(--dumb)" }}>dumb-session code.</span>
+            <span className="dumb">dumb-session code.</span>
           </div>
-          <div className="cta-row" style={{ justifyContent: "center", marginTop: 32 }}>
+          <div className="cta-row" style={{ justifyContent: "center" }}>
             <a className="btn-primary" href="#install">
               Install free →
             </a>
             <a className="btn-ghost" href={GH}>
-              ★ GitHub →
+              ★ GitHub
             </a>
           </div>
           <div className="score">
@@ -400,9 +326,7 @@ export default function Home() {
             <a href={`${GH}#readme`}>docs →</a>
             <a href={`${GH}/blob/main/LICENSE`}>MIT license</a>
           </div>
-          <div className="score" style={{ marginTop: 22, opacity: 0.5 }}>
-            made while watching this exact meter climb to 99%
-          </div>
+          <div className="fineprint">made while watching this exact meter climb to 99%</div>
         </div>
       </footer>
 
