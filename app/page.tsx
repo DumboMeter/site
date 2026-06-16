@@ -7,6 +7,7 @@ import SiteEffects from "@/components/SiteEffects";
 const SITE = "https://dumbometer.xyz";
 const REPO = "MaximoCorrea1/dumbometer";
 const GH = `https://github.com/${REPO}`;
+const TWITTER = "https://x.com/MaxoCorrea";
 const INSTALL = `/plugin marketplace add MaximoCorrea1/dumbometer
 /plugin install dumbometer
 /dumbometer:setup`;
@@ -323,10 +324,15 @@ export default function Home() {
             </a>
           </div>
           <div className="score">
-            reply with your highest <b>dumb score</b> 💀, screenshots encouraged
+            tag{" "}
+            <a href={TWITTER} style={{ color: "var(--acid)" }}>
+              @MaxoCorrea
+            </a>{" "}
+            with your highest <b>dumb score</b> 💀, screenshots encouraged
           </div>
           <div className="links">
             <a href={GH}>github →</a>
+            <a href={TWITTER}>twitter →</a>
             <a href={`${GH}#readme`}>docs →</a>
             <a href={`${GH}/blob/main/LICENSE`}>MIT license</a>
           </div>
