@@ -66,7 +66,7 @@ export default function RootLayout({
           <style
             dangerouslySetInnerHTML={{
               __html:
-                ".hero-top,.hero-eyebrow,.hero-h1,.hero-sub,.hero-meterbox,.hero-cta,.hero-trust,.reveal{opacity:1!important;transform:none!important}",
+                ".hero h1,.hero-say,.hero-meterbox,.hero-cta,.reveal{opacity:1!important;transform:none!important}",
             }}
           />
         </noscript>

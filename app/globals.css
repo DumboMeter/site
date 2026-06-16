@@ -51,13 +51,14 @@ body::before{
 .mascot{
   border-radius:50%; background:#fff url('/logo.png') center / 132% no-repeat; flex:0 0 auto;
 }
-.mascot.top{ width:96px; height:96px; box-shadow:0 0 52px -6px var(--acid); }
+.mascot.top{ width:46px; height:46px; box-shadow:0 0 26px -5px var(--acid); }
 .mascot.foot{ width:74px; height:74px; box-shadow:0 0 40px -6px var(--pink); }
 
-/* === TOP MAST (icon topmost) === */
-.topmast{ position:relative; display:flex; justify-content:center; padding:34px 26px 0; }
+/* === TOP NAV (logo left) === */
+.topmast{ display:flex; align-items:center; justify-content:space-between; gap:14px; padding:16px 26px; max-width:var(--maxw); margin:0 auto; }
+.brandmark{ display:flex; align-items:center; gap:11px; }
+.wordmark{ font-family:var(--font-display), sans-serif; font-weight:800; font-size:21px; letter-spacing:-.03em; }
 .ghlink{
-  position:absolute; right:26px; top:30px;
   font-family:var(--font-mono), monospace; font-size:14px; font-weight:700;
   border:2px solid var(--ink); background:var(--ink); color:var(--bg); padding:9px 15px;
   box-shadow:4px 4px 0 var(--acid); transition:transform 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
@@ -66,25 +67,24 @@ body::before{
 .ghlink:active{ transform:scale(.97); }
 
 /* === HERO (poster, centered) === */
-header.hero{ text-align:center; padding:30px 0 70px; }
+header.hero{ text-align:center; padding:10px 0 52px; }
 .hero h1{
   font-weight:800; letter-spacing:-.05em; line-height:.88;
   font-size:clamp(54px,9.2vw,132px); margin:0 auto; max-width:14ch;
 }
 .hero h1 .hl{ color:var(--dumb); }
 .hero-say{
-  margin:26px auto 0; max-width:760px; font-size:clamp(19px,2.3vw,27px);
+  margin:16px auto 0; max-width:740px; font-size:clamp(18px,2.1vw,24px);
   color:#d8d6e2; font-weight:500; line-height:1.45;
 }
 .hero-say code{ font-family:var(--font-mono), monospace; color:var(--acid); background:#000; border:1px solid #ffffff24; padding:1px 7px; font-size:.82em; }
 
 /* stagger entrance */
-.topmast, .hero h1, .hero-say, .hero-meterbox, .hero-cta{ opacity:0; transform:translateY(12px); transition:opacity 420ms var(--ease-out), transform 420ms var(--ease-out); }
-body[data-mounted] .topmast      { opacity:1; transform:none; transition-delay:0ms; }
-body[data-mounted] .hero h1      { opacity:1; transform:none; transition-delay:80ms; }
-body[data-mounted] .hero-say     { opacity:1; transform:none; transition-delay:160ms; }
-body[data-mounted] .hero-meterbox{ opacity:1; transform:none; transition-delay:240ms; }
-body[data-mounted] .hero-cta     { opacity:1; transform:none; transition-delay:320ms; }
+.hero h1, .hero-say, .hero-meterbox, .hero-cta{ opacity:0; transform:translateY(12px); transition:opacity 420ms var(--ease-out), transform 420ms var(--ease-out); }
+body[data-mounted] .hero h1      { opacity:1; transform:none; transition-delay:40ms; }
+body[data-mounted] .hero-say     { opacity:1; transform:none; transition-delay:110ms; }
+body[data-mounted] .hero-meterbox{ opacity:1; transform:none; transition-delay:180ms; }
+body[data-mounted] .hero-cta     { opacity:1; transform:none; transition-delay:250ms; }
 
 /* === SEGMENTED METER === */
 .meter{ display:flex; gap:4px; flex:1 1 auto; min-width:0; --mc:var(--smart); }
@@ -98,7 +98,7 @@ body[data-mounted] .hero-cta     { opacity:1; transform:none; transition-delay:3
 .meter.session{ height:26px; gap:3px; }
 
 /* === HERO METERBOX === */
-.hero-meterbox{ margin-top:44px; display:flex; justify-content:center; }
+.hero-meterbox{ margin-top:28px; display:flex; justify-content:center; }
 .meterbox{
   width:100%; max-width:760px; background:#000; border:var(--border); border-radius:6px;
   padding:24px 28px 22px; position:relative; cursor:pointer; user-select:none; text-align:left;
@@ -117,6 +117,7 @@ body[data-mounted] .hero-cta     { opacity:1; transform:none; transition-delay:3
 .statusline{ font-family:var(--font-mono), monospace; font-weight:700; font-size:clamp(16px,2.7vw,24px); display:flex; align-items:center; gap:1.1ch; flex-wrap:nowrap; min-width:0; }
 .sl-ctx{ color:#4e5049; font-weight:500; white-space:nowrap; display:flex; align-items:center; gap:1.1ch; flex:0 0 auto; }
 .sl-ctx .branch{ color:#5a5d57; }
+.sl-tag{ color:#8a9a5e; font-weight:600; font-size:.82em; letter-spacing:.02em; white-space:nowrap; flex:0 0 auto; }
 .sl-meta{ display:flex; align-items:center; gap:.7ch; flex:1 1 auto; min-width:0; }
 .sl-word{ min-width:6.5ch; display:inline-block; white-space:nowrap; }
 .sl-pct{ margin-left:.3ch; min-width:4ch; text-align:right; }
@@ -125,7 +126,7 @@ body[data-mounted] .hero-cta     { opacity:1; transform:none; transition-delay:3
 .ticker b{ color:#fff; }
 
 /* === BUTTONS === */
-.hero-cta{ display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-top:34px; }
+.hero-cta{ display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-top:22px; }
 .cta-row{ display:flex; gap:14px; flex-wrap:wrap; align-items:center; margin-top:32px; }
 .btn-primary{
   font-family:var(--font-mono), monospace; font-weight:700; font-size:17px;
@@ -271,10 +272,14 @@ footer .fineprint{ font-family:var(--font-mono), monospace; color:#55535e; margi
 @media (max-width:520px){
   .states-bar{ grid-template-columns:1fr; }
   .wrap{ padding:0 18px; }
-  .statusline{ font-size:17px; }
+  .topmast{ padding:13px 18px; }
+  .wordmark{ font-size:18px; }
+  .hero h1{ font-size:clamp(38px,11.5vw,58px); max-width:none; }
+  .hero-say{ font-size:18px; }
+  .statusline{ font-size:16px; gap:.8ch; }
+  .sl-ctx{ display:none; }
+  .meterbox{ padding:20px 18px 18px; }
   .meterbox, .session-strip, .zerotok-block, .install-hi, .rot-block, .faq{ max-width:100%; }
-  .ghlink{ position:static; }
-  .topmast{ justify-content:center; }
-  .sec{ padding:80px 0; }
+  .sec{ padding:72px 0; }
   footer .big{ word-break:break-word; }
 }

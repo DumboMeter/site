@@ -63,9 +63,9 @@ export default function HeroMeter() {
       <div className="statusline">
         <span className="sl-ctx">
           <span className="cwd">~/my-app</span>
-          <span className="branch">main</span>
         </span>
         <span className="sl-meta">
+          <span className="sl-tag">context rot</span>
           <span className="sl-word" style={{ color: st.color }}>
             {st.label}
           </span>

@@ -11,7 +11,8 @@ const INSTALL = `/plugin marketplace add MaximoCorrea1/dumbometer
 /plugin install dumbometer
 /dumbometer:setup`;
 const STEPS = INSTALL.split("\n");
-const CHECKOUT = "/api/checkout?products=843fdc28-55e3-43d5-9924-2af444e412f4";
+// Hosted Polar checkout link (return URL configured in Polar -> /return).
+const CHECKOUT = "https://buy.polar.sh/polar_cl_JiVvI8C44Dy2ylYiofc2FqB7pmy9k2TF4oCSo3AyKhl";
 
 const SESSION = [
   { label: "Smart", color: "var(--smart)", pct: 12, note: "fresh context. agent is sharp." },
@@ -74,7 +75,10 @@ export default function Home() {
       />
 
       <div className="topmast">
-        <span className="mascot top" role="img" aria-label="dumbometer mascot, a derpy gauge face" />
+        <a className="brandmark" href="/" aria-label="dumbometer home">
+          <span className="mascot top" role="img" aria-label="dumbometer mascot, a derpy gauge face" />
+          <span className="wordmark">dumbometer</span>
+        </a>
         <a className="ghlink" href={GH}>
           ★ GitHub
         </a>
