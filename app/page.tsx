@@ -337,6 +337,12 @@ export default function Home() {
             <a href={`${GH}/blob/main/LICENSE`}>MIT license</a>
           </div>
           <div className="fineprint">made while watching this exact meter climb to 99%</div>
+          <div className="egg">
+            <span className="egg-q" tabIndex={0} role="note" aria-label="made with pepi claramunt, love">
+              ?
+            </span>
+            <span className="egg-msg">made with pepi claramunt ♥</span>
+          </div>
         </div>
       </footer>
 

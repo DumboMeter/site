@@ -256,6 +256,22 @@ footer .links a{ border-bottom:2px solid var(--acid); padding-bottom:2px; color:
 footer .links a:hover{ color:var(--ink); }
 footer .fineprint{ font-family:var(--font-mono), monospace; color:#55535e; margin-top:26px; font-size:13px; }
 
+/* easter egg: ? in the footer that unfolds on hover */
+.egg{ margin-top:22px; display:flex; align-items:center; justify-content:center; }
+.egg-q{
+  font-family:var(--font-mono), monospace; font-size:12px; color:#3c3b44; cursor:help;
+  width:22px; height:22px; border-radius:50%; border:1px solid #ffffff12;
+  display:inline-flex; align-items:center; justify-content:center;
+  transition:color 220ms var(--ease-out), border-color 220ms var(--ease-out), box-shadow 220ms var(--ease-out);
+}
+.egg:hover .egg-q, .egg:focus-within .egg-q{ color:var(--pink); border-color:var(--pink); box-shadow:0 0 16px -4px var(--pink); }
+.egg-msg{
+  font-family:var(--font-mono), monospace; font-size:13px; color:var(--pink); font-weight:600;
+  max-width:0; overflow:hidden; opacity:0; white-space:nowrap; margin-left:0;
+  transition:max-width 380ms var(--ease-out), opacity 300ms var(--ease-out), margin-left 380ms var(--ease-out);
+}
+.egg:hover .egg-msg, .egg:focus-within .egg-msg{ max-width:340px; opacity:1; margin-left:12px; }
+
 /* scroll reveal */
 .reveal{ opacity:0; transform:translateY(16px); transition:opacity 540ms var(--ease-out), transform 540ms var(--ease-out); }
 .reveal.in{ opacity:1; transform:none; }
