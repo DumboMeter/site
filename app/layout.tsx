@@ -17,7 +17,7 @@ const mono = JetBrains_Mono({
 });
 
 // Domain is set at deploy time (Vercel env). Falls back for local/preview.
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://dumbometer.dev";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://dumbometer.xyz";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

@@ -3,10 +3,12 @@ import HeroMeter from "@/components/HeroMeter";
 import CopyButton from "@/components/CopyButton";
 import SiteEffects from "@/components/SiteEffects";
 
+const SITE = "https://dumbometer.xyz";
 const GH = "https://github.com/MaximoCorrea1/dumbometer";
 const INSTALL = `/plugin marketplace add MaximoCorrea1/dumbometer
 /plugin install dumbometer
 /dumbometer:setup`;
+const STEPS = INSTALL.split("\n");
 // $9 Big Dumb Energy -> Polar checkout (server route keeps the token server-side).
 const CHECKOUT = "/api/checkout?products=843fdc28-55e3-43d5-9924-2af444e412f4";
 
@@ -25,13 +27,55 @@ const STATES = [
   { nm: "Dumb 💀", color: "var(--dumb)", rg: "90-100%", pct: 96 },
 ];
 
+// FAQ drives both the visible section and the FAQPage JSON-LD (DRY).
+const FAQ = [
+  { q: "What is dumbometer?", a: "A Claude Code status-line gauge that shows how full your context window is, from Smart to Dumb, so you /compact before quality drops." },
+  { q: "What is context rot?", a: "As a session fills the context window, the model spreads its attention thinner and starts making mistakes it would not make fresh. dumbometer measures the cause, context percent, so you see it coming." },
+  { q: "Does it cost tokens?", a: "No. It reads a number Claude Code already computed and runs locally on every render. Zero tokens, zero network, zero cost." },
+  { q: "Will it slow down or break Claude Code?", a: "No. The hot path is synchronous and sub-millisecond, and every failure path falls back to safe output and exits clean. 64 tests cover the never-crash contract." },
+  { q: "Does it work with the 1M context window?", a: "Yes. It reads the real window size, 200k or 1M, and shows the percentage either way." },
+  { q: "How do I install it?", a: "Three commands: /plugin marketplace add MaximoCorrea1/dumbometer, /plugin install dumbometer, /dumbometer:setup. It is free and MIT." },
+];
+
+const SCHEMA = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      name: "dumbometer",
+      applicationCategory: "DeveloperApplication",
+      operatingSystem: "Cross-platform (Node.js)",
+      description:
+        "A Claude Code status-line gauge that shows how full your context window is, from Smart to Dumb, so you /compact before quality drops. Zero tokens, never crashes.",
+      url: SITE,
+      offers: [
+        { "@type": "Offer", price: "0", priceCurrency: "USD", name: "Free" },
+        { "@type": "Offer", price: "9", priceCurrency: "USD", name: "Big Dumb Energy" },
+      ],
+      license: "https://opensource.org/license/mit",
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: FAQ.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    },
+  ],
+};
+
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }}
+      />
+
       <nav>
         <div className="brand">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="badge" src="/logo.png" alt="dumbometer mascot" />
+          <span className="badge" role="img" aria-label="dumbometer mascot" />
           dumbometer
         </div>
         <a className="navlink" href={GH}>
@@ -42,8 +86,7 @@ export default function Home() {
       <header className="hero wrap">
         <div className="hero-col">
           <div className="hero-top">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="hero-mascot" src="/logo.png" alt="dumbometer mascot, a derpy gauge face" />
+            <span className="hero-mascot" role="img" aria-label="dumbometer mascot, a derpy gauge face" />
             <span className="hero-word">dumbometer</span>
           </div>
 
@@ -163,6 +206,15 @@ export default function Home() {
             </div>
           ))}
         </div>
+
+        <div className="cta-band">
+          <div className="ct">
+            See it in <span className="acc">your</span> status line.
+          </div>
+          <a className="btn-primary" href="#install">
+            Install free →
+          </a>
+        </div>
       </section>
 
       <section className="wrap reveal">
@@ -203,16 +255,45 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="wrap reveal">
+        <span className="section-label grape">faq</span>
+        <h2>Questions, answered.</h2>
+        <div className="faq">
+          {FAQ.map((f) => (
+            <div className="faq-item" key={f.q}>
+              <div className="q">{f.q}</div>
+              <div className="a">{f.a}</div>
+            </div>
+          ))}
+        </div>
+        <div className="cta-band">
+          <div className="ct">
+            That is the whole thing. <span className="acc">Free.</span>
+          </div>
+          <a className="btn-primary" href="#install">
+            Install free →
+          </a>
+        </div>
+      </section>
+
       <section className="wrap reveal tight" id="install">
         <span className="section-label">install</span>
-        <h2>30 seconds. Then forget about it.</h2>
-        <div className="install-block">
-          <code className="mono">{INSTALL}</code>
-          <CopyButton text={INSTALL} label="COPY ALL" />
+        <h2>30 seconds. Then forget it exists.</h2>
+        <p className="lead">Three commands. Paste them into Claude Code and the meter shows up.</p>
+        <div className="install-hi">
+          {STEPS.map((cmd, i) => (
+            <div className="step" key={cmd}>
+              <span className="n">{i + 1}</span>
+              <span className="cmd">{cmd}</span>
+            </div>
+          ))}
+          <div className="install-foot">
+            <span className="trust-line mono" style={{ marginTop: 0 }}>
+              free · MIT · zero tokens · never crashes
+            </span>
+            <CopyButton text={INSTALL} label="COPY ALL 3" />
+          </div>
         </div>
-        <p className="trust-line mono" style={{ marginTop: 16 }}>
-          free · MIT · zero deps · zero tokens · never crashes
-        </p>
       </section>
 
       <section className="wrap reveal">
@@ -292,6 +373,14 @@ export default function Home() {
             Stop shipping
             <br />
             <span style={{ color: "var(--dumb)" }}>dumb-session code.</span>
+          </div>
+          <div className="cta-row" style={{ justifyContent: "center", marginTop: 28 }}>
+            <a className="btn-primary" href="#install">
+              Install free →
+            </a>
+            <a className="btn-ghost" href={GH}>
+              ★ GitHub →
+            </a>
           </div>
           <div className="score">
             reply with your highest <b>dumb score</b> 💀, screenshots encouraged

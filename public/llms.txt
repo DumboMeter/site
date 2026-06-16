@@ -1,0 +1,27 @@
+# dumbometer
+
+> A Claude Code status-line gauge that shows how full your context window is, from Smart to Dumb, so you /compact before your AI's quality drops. Free, MIT, zero tokens, never crashes.
+
+dumbometer is a Claude Code plugin. It reads the context-window percentage Claude Code already computes and renders a 14-cell, 256-color gauge in your status line: Smart (0-24%), Coasting (25-49%), Foggy (50-69%), Cooked (70-89%), Dumb (90-100%). It runs locally on every render, costs zero tokens, has zero dependencies, and is built to never crash the status line.
+
+## Install
+- /plugin marketplace add MaximoCorrea1/dumbometer
+- /plugin install dumbometer
+- /dumbometer:setup
+
+## Key facts
+- Free and MIT licensed. The free tier is the whole product.
+- Zero token cost: reads a number Claude Code already computed, never calls the model.
+- Zero dependencies, Node.js only, 64 tests, sub-millisecond hot path.
+- Works with both the 200k and 1M context windows.
+- "Context rot" is the quality decay that happens as the context window fills. dumbometer measures the cause (context percent) so you can see it coming.
+
+## Pages
+- Home: https://dumbometer.xyz
+- Pricing (machine readable): https://dumbometer.xyz/pricing.md
+- Source (free): https://github.com/MaximoCorrea1/dumbometer
+
+## Pricing
+- Free: $0. The complete product.
+- Big Dumb Energy: $9 one-time. Adds color themes, Roast Mode, custom labels, a dumb score flag.
+- Singularity: $1,000,000 per year. A joke. Please buy the free one.
