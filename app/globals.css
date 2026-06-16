@@ -67,7 +67,11 @@ body::before{
 .ghlink:active{ transform:scale(.97); }
 
 /* === HERO (poster, centered) === */
-header.hero{ text-align:center; padding:10px 0 52px; }
+header.hero{
+  text-align:center; padding:16px 0 36px;
+  min-height:calc(100vh - 80px); min-height:calc(100svh - 80px);
+  display:flex; flex-direction:column; justify-content:center;
+}
 .hero h1{
   font-weight:800; letter-spacing:-.05em; line-height:.88;
   font-size:clamp(54px,9.2vw,132px); margin:0 auto; max-width:14ch;
@@ -112,7 +116,10 @@ body[data-mounted] .hero-cta     { opacity:1; transform:none; transition-delay:2
   0%,100%{ box-shadow:0 0 0 1px #ffffff10, 5px 5px 0 0 var(--acid); }
   50%{ box-shadow:0 0 0 1px #ffffff10, 5px 5px 0 0 var(--acid), 0 0 46px -4px var(--acid); }
 }
-.meterbox .chrome{ display:flex; gap:7px; margin-bottom:18px; }
+.meterbox .chrome{ display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; }
+.meterbox .chrome .dots{ display:flex; gap:7px; }
+.rot-tag{ font-family:var(--font-mono), monospace; font-size:13px; font-weight:700; color:#8a9a5e; white-space:nowrap; }
+.rot-tag b{ color:var(--acid); }
 .meterbox .chrome i{ width:12px; height:12px; border-radius:50%; background:#2a2a2a; display:block; border:1px solid #ffffff15; }
 .statusline{ font-family:var(--font-mono), monospace; font-weight:700; font-size:clamp(16px,2.7vw,24px); display:flex; align-items:center; gap:1.1ch; flex-wrap:nowrap; min-width:0; }
 .sl-ctx{ color:#4e5049; font-weight:500; white-space:nowrap; display:flex; align-items:center; gap:1.1ch; flex:0 0 auto; }
