@@ -11,6 +11,6 @@ const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dumbometer.xyz";
 export const GET = Checkout({
   accessToken: process.env.POLAR_ACCESS_TOKEN!,
   successUrl:
-    process.env.POLAR_SUCCESS_URL ?? `${SITE}/success?checkout_id={CHECKOUT_ID}`,
+    process.env.POLAR_SUCCESS_URL ?? `${SITE}/return?checkout_id={CHECKOUT_ID}`,
   server: (process.env.POLAR_SERVER as "sandbox" | "production") ?? "production",
 });
