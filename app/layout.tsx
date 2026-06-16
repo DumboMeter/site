@@ -1,22 +1,25 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, JetBrains_Mono } from "next/font/google";
+import { Unbounded, Gabarito, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-// Variable fonts: no explicit weight needed. CSS uses font-weight 600/800 (display)
-// and 500/700 (mono) via the variable axis.
-const display = Bricolage_Grotesque({
+// Variable fonts: no explicit weight needed. Display = Unbounded (chunky, candy),
+// body = Hanken Grotesque (clean), renders = JetBrains Mono.
+const display = Unbounded({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
 });
-
+const body = Gabarito({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+});
 const mono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
   display: "swap",
 });
 
-// Domain is set at deploy time (Vercel env). Falls back for local/preview.
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://dumbometer.xyz";
 
 export const metadata: Metadata = {
@@ -52,7 +55,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${display.variable} ${mono.variable}`}>
+    <html
+      lang="en"
+      className={`${display.variable} ${body.variable} ${mono.variable}`}
+    >
       <body>
         {/* No-JS fallback: the entrance + scroll-reveal start hidden and are shown
             by JS. Without JS, reveal everything so content is never hidden. */}

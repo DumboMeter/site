@@ -2,9 +2,11 @@ import Meter from "@/components/Meter";
 import HeroMeter from "@/components/HeroMeter";
 import CopyButton from "@/components/CopyButton";
 import SiteEffects from "@/components/SiteEffects";
+import GitHubStars from "@/components/GitHubStars";
 
 const SITE = "https://dumbometer.xyz";
-const GH = "https://github.com/MaximoCorrea1/dumbometer";
+const REPO = "MaximoCorrea1/dumbometer";
+const GH = `https://github.com/${REPO}`;
 const INSTALL = `/plugin marketplace add MaximoCorrea1/dumbometer
 /plugin install dumbometer
 /dumbometer:setup`;
@@ -87,11 +89,10 @@ export default function Home() {
         <div className="hero-col">
           <div className="hero-top">
             <span className="hero-mascot" role="img" aria-label="dumbometer mascot, a derpy gauge face" />
-            <span className="hero-word">dumbometer</span>
           </div>
 
           <div className="hero-eyebrow">
-            <span className="eyebrow mono">a meter for Claude Code</span>
+            <span className="eyebrow mono">// a meter for Claude Code</span>
           </div>
 
           <div className="hero-h1">
@@ -121,17 +122,30 @@ export default function Home() {
           </div>
 
           <div className="hero-trust">
-            <p className="trust-line mono">free · MIT · zero tokens · 64 tests · never crashes</p>
+            <div className="proof">
+              <GitHubStars repo={REPO} />
+              <span className="chip">
+                <b>64</b> tests
+              </span>
+              <span className="chip">
+                <b>0</b> deps
+              </span>
+              <span className="chip">
+                <b>0</b> tokens
+              </span>
+              <span className="chip">MIT</span>
+              <span className="chip">never crashes</span>
+            </div>
           </div>
         </div>
       </header>
 
       <section className="wrap reveal">
-        <span className="section-label cyan">a real session</span>
-        <h2>What it looks like over time.</h2>
+        <span className="section-label cyan">// a real session</span>
+        <h2>Watch it climb.</h2>
         <p className="lead">
-          A typical coding session. The meter climbs in your status line. You see it coming before the
-          answers go bad.
+          One coding session, top to bottom. The meter fills in your status line, and you see the
+          drop coming before the answers go bad.
         </p>
 
         <div className="session-strip">
@@ -161,7 +175,7 @@ export default function Home() {
             <span className="ss-pct" style={{ color: "var(--smart)" }}>
               8%
             </span>
-            <span className="ss-note" style={{ color: "#5dff5750" }}>
+            <span className="ss-note" style={{ color: "#4dff6a55" }}>
               ↑ after /compact, fresh context.
             </span>
           </div>
@@ -169,13 +183,13 @@ export default function Home() {
       </section>
 
       <section className="wrap reveal">
-        <span className="section-label pink">the problem</span>
+        <span className="section-label pink">// the problem</span>
         <h2>Context rot is real.</h2>
         <div className="rot-block">
           <p>
-            Early in a chat your agent one-shots the function. A few hundred messages later it
-            re-introduces the bug you fixed an hour ago and confidently invents an API. You cannot
-            feel it coming. The meter can.
+            Early on, your agent one-shots the function. Three hundred messages later it re-introduces
+            the bug you killed an hour ago and confidently invents an API that does not exist. You
+            cannot feel it coming. The meter can.
           </p>
           <div className="sig mono">
             {"// the fix is "}
@@ -185,10 +199,10 @@ export default function Home() {
       </section>
 
       <section className="wrap reveal">
-        <span className="section-label">the readout</span>
+        <span className="section-label">// the readout</span>
         <h2>Five states. One glance.</h2>
         <p className="lead">
-          dumbometer measures the cause: how full the context window is. Empty = sharp. Full = mush.
+          Empty window = sharp. Full window = mush. dumbometer measures the cause and names it.
         </p>
         <div className="states">
           {STATES.map((s) => (
@@ -218,30 +232,28 @@ export default function Home() {
       </section>
 
       <section className="wrap reveal">
-        <span className="section-label grape">how it works</span>
-        <h2>Simple by design.</h2>
-        <p className="lead">Three things, and that is the whole story.</p>
+        <span className="section-label grape">// how it works</span>
+        <h2>Three things. That is it.</h2>
 
         <div className="how">
           <div className="how-item">
             <h3>{"// reads your % locally"}</h3>
             <p>
-              Pulls the actual context-window percentage straight from Claude Code&apos;s status-line
-              data, on your machine. No guessing, no transcript scraping, no network call.
+              Pulls the real context-window percentage from Claude Code, on your machine. No guessing,
+              no transcript scraping, no network call.
             </p>
           </div>
           <div className="how-item">
             <h3>{"// never crashes"}</h3>
             <p>
               Every failure path falls back to safe output and exits clean. It will never garble your
-              status line. 64 tests.
+              status line. 64 tests prove it.
             </p>
           </div>
           <div className="how-item">
-            <h3>{"// one file"}</h3>
+            <h3>{"// one file, zero deps"}</h3>
             <p>
-              Zero dependencies. MIT. No account, no telemetry, no config needed. Clone it or install
-              it, works immediately.
+              MIT, no account, no telemetry, no config. Clone it or install it. It works immediately.
             </p>
           </div>
         </div>
@@ -249,14 +261,14 @@ export default function Home() {
         <div className="zerotok-block">
           <span className="zt-badge">ZERO TOKENS</span>
           <p className="zt-txt">
-            Reads a number Claude Code already computed, never calls the model. Runs locally on every
-            render. Will never cost you a cent or a single token of context.
+            It reads a number Claude Code already computed. It never calls the model. It will never
+            cost you a cent or a single token of context.
           </p>
         </div>
       </section>
 
       <section className="wrap reveal">
-        <span className="section-label grape">faq</span>
+        <span className="section-label grape">// faq</span>
         <h2>Questions, answered.</h2>
         <div className="faq">
           {FAQ.map((f) => (
@@ -277,9 +289,9 @@ export default function Home() {
       </section>
 
       <section className="wrap reveal tight" id="install">
-        <span className="section-label">install</span>
+        <span className="section-label">// install</span>
         <h2>30 seconds. Then forget it exists.</h2>
-        <p className="lead">Three commands. Paste them into Claude Code and the meter shows up.</p>
+        <p className="lead">Paste three commands into Claude Code. The meter shows up.</p>
         <div className="install-hi">
           {STEPS.map((cmd, i) => (
             <div className="step" key={cmd}>
@@ -288,16 +300,14 @@ export default function Home() {
             </div>
           ))}
           <div className="install-foot">
-            <span className="trust-line mono" style={{ marginTop: 0 }}>
-              free · MIT · zero tokens · never crashes
-            </span>
+            <span className="trust-line mono">free · MIT · zero tokens · never crashes</span>
             <CopyButton text={INSTALL} label="COPY ALL 3" />
           </div>
         </div>
       </section>
 
       <section className="wrap reveal">
-        <span className="section-label pink">pricing</span>
+        <span className="section-label pink">// pricing</span>
         <h2>Three tiers. Pick the free one.</h2>
         <p className="lead">
           The product is free and that is the honest answer. The other two exist because we could not
@@ -353,7 +363,7 @@ export default function Home() {
             </div>
             <ul>
               <li>We fly to your home office.</li>
-              <li>We physically tap your shoulder when the context fills.</li>
+              <li>We tap your shoulder when the context fills.</li>
               <li>Weighted blanket included.</li>
             </ul>
             <a
@@ -374,7 +384,7 @@ export default function Home() {
             <br />
             <span style={{ color: "var(--dumb)" }}>dumb-session code.</span>
           </div>
-          <div className="cta-row" style={{ justifyContent: "center", marginTop: 28 }}>
+          <div className="cta-row" style={{ justifyContent: "center", marginTop: 32 }}>
             <a className="btn-primary" href="#install">
               Install free →
             </a>
@@ -390,7 +400,7 @@ export default function Home() {
             <a href={`${GH}#readme`}>docs →</a>
             <a href={`${GH}/blob/main/LICENSE`}>MIT license</a>
           </div>
-          <div className="score" style={{ marginTop: 20, opacity: 0.5 }}>
+          <div className="score" style={{ marginTop: 22, opacity: 0.5 }}>
             made while watching this exact meter climb to 99%
           </div>
         </div>

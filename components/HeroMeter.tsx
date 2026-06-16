@@ -5,14 +5,14 @@ import type { CSSProperties, ReactNode } from "react";
 import { CELLS, filled, stateFor } from "@/lib/meter";
 
 // Click targets: each click lands squarely in the next state, getting dumber.
-const STAGES = [
-  { pct: 12, t: "fresh. sharp. one-shots everything." },
-  { pct: 38, t: "still good. cruising." },
-  { pct: 60, t: "starting to forget the details..." },
-  { pct: 80, t: "wait, what were we doing again?" },
-  { pct: 96, t: "💀 reinventing the API you wrote 5 minutes ago." },
+const STAGES = [12, 38, 60, 80, 96];
+const STAGE_TICK = [
+  "fresh. sharp. one-shots everything.",
+  "still good. cruising.",
+  "starting to forget the details...",
+  "wait, what were we doing again?",
+  "💀 reinventing the API you wrote 5 minutes ago.",
 ];
-
 const AUTO_TICKERS = [
   "› parsing a 2,000-line file...",
   '› "remind me what we were doing"',
@@ -20,38 +20,27 @@ const AUTO_TICKERS = [
   "› inventing an API that does not exist",
 ];
 
-function stageFromPct(p: number) {
-  if (p >= 90) return 4;
-  if (p >= 70) return 3;
-  if (p >= 50) return 2;
-  if (p >= 25) return 1;
-  return 0;
+// highest STAGES index whose value is <= pct
+function stageAt(pct: number) {
+  let i = 0;
+  for (let k = 0; k < STAGES.length; k++) if (STAGES[k] <= pct) i = k;
+  return i;
 }
 
-// The hero product proof + toy: autoplays a climbing session until you touch it,
-// then each click bumps the meter one state dumber. At Dumb, the next click
-// runs /compact and flushes back to Smart. Respects reduced-motion.
 export default function HeroMeter() {
-  const [pct, setPct] = useState(4);
-  const [ticker, setTicker] = useState<ReactNode>("› idle. click me to make your AI dumber.");
+  const [pct, setPct] = useState(8);
+  const [ticker, setTicker] = useState<ReactNode>("› click me. make your AI dumber.");
 
-  const pRef = useRef(4);
-  const manual = useRef(false);
+  const pRef = useRef(8);
+  const auto = useRef(true); // autoplay until first interaction
   const stage = useRef(0);
   const reduced = useRef(false);
   const ai = useRef(0);
-  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const set = useCallback((p: number) => {
+  const apply = useCallback((p: number) => {
     pRef.current = p;
     setPct(p);
-  }, []);
-  const later = useCallback((fn: () => void, ms: number) => {
-    timers.current.push(setTimeout(fn, ms));
-  }, []);
-  const clearTimers = useCallback(() => {
-    timers.current.forEach(clearTimeout);
-    timers.current = [];
   }, []);
 
   useEffect(() => {
@@ -60,7 +49,7 @@ export default function HeroMeter() {
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
     if (reduced.current) {
-      set(78);
+      apply(78);
       setTicker(
         <>
           › <b>Cooked</b>. click to make it dumber.
@@ -69,65 +58,60 @@ export default function HeroMeter() {
       return;
     }
 
-    set(4);
-
-    const loop = () => {
-      if (manual.current) return;
-      const next =
-        pRef.current + (Math.random() < 0.25 ? 1 : 2 + Math.floor(Math.random() * 3));
-
+    const tick = () => {
+      if (!auto.current) return;
+      const next = pRef.current + (Math.random() < 0.3 ? 1 : 2 + Math.floor(Math.random() * 3));
       if (next >= 100) {
-        set(100);
+        apply(100);
         setTicker(
           <>
             › <b>/compact</b>. flushing the rot...
           </>
         );
-        later(() => {
-          if (manual.current) return;
-          set(4);
+        timer.current = setTimeout(() => {
+          if (!auto.current) return;
+          apply(6);
           setTicker("› fresh session. context flushed.");
-          later(loop, 1200);
-        }, 1600);
+          timer.current = setTimeout(tick, 1100);
+        }, 1500);
         return;
       }
-
-      set(next);
+      apply(next);
       if (next > 30 && next < 92 && Math.random() < 0.35) {
         setTicker(AUTO_TICKERS[ai.current++ % AUTO_TICKERS.length]);
       }
-      later(loop, 600 + Math.random() * 300);
+      timer.current = setTimeout(tick, 650 + Math.random() * 250);
     };
 
-    later(loop, 800);
-
-    const list = timers.current;
-    return () => list.forEach(clearTimeout);
-  }, [set, later]);
+    timer.current = setTimeout(tick, 700);
+    return () => {
+      if (timer.current) clearTimeout(timer.current);
+    };
+  }, [apply]);
 
   const bump = useCallback(() => {
     if (reduced.current) return;
-    if (!manual.current) {
-      manual.current = true;
-      clearTimers();
-      stage.current = stageFromPct(pRef.current);
+    // first interaction: stop autoplay hard, sync to the current state
+    if (auto.current) {
+      auto.current = false;
+      if (timer.current) clearTimeout(timer.current);
+      stage.current = stageAt(pRef.current);
     }
-    if (stage.current >= STAGES.length - 1) {
-      // already Dumb -> /compact flush back to Smart
+    // at Dumb -> /compact flush; otherwise step one state dumber
+    if (stage.current >= STAGES.length - 1 && pRef.current >= 90) {
       stage.current = 0;
-      set(6);
+      apply(6);
       setTicker(
         <>
           › <b>/compact</b>. ahh, fresh context.
         </>
       );
     } else {
-      stage.current += 1;
-      const s = STAGES[stage.current];
-      set(s.pct);
-      setTicker("› " + s.t);
+      stage.current = Math.min(STAGES.length - 1, stage.current + 1);
+      apply(STAGES[stage.current]);
+      setTicker("› " + STAGE_TICK[stage.current]);
     }
-  }, [set, clearTimers]);
+  }, [apply]);
 
   const st = stateFor(pct);
   const f = filled(pct);
