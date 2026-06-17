@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Unbounded, Gabarito, JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 // Variable fonts: no explicit weight needed. Display = Unbounded (chunky, candy),
@@ -71,6 +72,7 @@ export default function RootLayout({
           />
         </noscript>
         {children}
+        <Analytics />
       </body>
     </html>
   );
